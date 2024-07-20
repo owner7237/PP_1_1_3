@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = Util.getConnection().createStatement()){
             statement.execute(sql);
         } catch (SQLException e) {
-            System.err.println("Ошибка создания таблицы: " + e.getSQLState());;
+            System.err.println("Ошибка создания таблицы: " + e.getSQLState());
         }
     }
 
@@ -57,7 +57,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public List<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
-        ResultSet results = null;
+        ResultSet results;
 
         String sql = "SELECT * FROM users";
         try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {

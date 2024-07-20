@@ -9,8 +9,6 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private UserDaoJDBCImpl UserJDBC;
-    private Util util;
-    private Connection DBCon;
     public UserServiceImpl() {
          UserJDBC = new UserDaoJDBCImpl();
          Util.CreateConnection();
