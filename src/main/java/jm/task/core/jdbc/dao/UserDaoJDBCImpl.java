@@ -11,7 +11,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void createUsersTable() {
         String sql = "create table users (id integer unique auto_increment primary key, name varchar(45), lastname varchar(45), age tinyint unsigned)";
-        try (Statement statement = Util.getConnection().createStatement()){
+        try (var con = Util.getConnection(); var statement = con.createStatement()){
             statement.execute(sql);
         } catch (SQLException e) {
             System.err.println("Ошибка создания таблицы: " + e.getMessage());
@@ -29,14 +29,12 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void saveUser(String name, String lastName, byte age) {
         String sql = "insert into users (name, lastname, age) VALUES (?, ?, ?)";
-        try {
-            try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+        try (var con = Util.getConnection(); var preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setString(1, name);
                 preparedStatement.setString(2, lastName);
                 preparedStatement.setByte(3, age);
 
                 preparedStatement.executeUpdate();
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -44,12 +42,10 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         String sql = "delete from users where id = ?";
-        try {
-            try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+        try (var con = Util.getConnection(); var preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setLong(1, id);
 
                 preparedStatement.executeUpdate();
-            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +56,7 @@ public class UserDaoJDBCImpl implements UserDao {
         ResultSet results;
 
         String sql = "SELECT * FROM users";
-        try (PreparedStatement preparedStatement = Util.getConnection().prepareStatement(sql)) {
+        try (var con = Util.getConnection(); var preparedStatement = con.prepareStatement(sql)) {
             results = preparedStatement.executeQuery();
 
 
@@ -81,7 +77,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         String sql = "delete from users";
-        try (Statement statement = Util.getConnection().createStatement()){
+        try (var con = Util.getConnection(); var statement = con.createStatement()){
             statement.execute(sql);
         } catch (SQLException e) {
             throw new RuntimeException(e);
