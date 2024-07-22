@@ -6,14 +6,27 @@ import jm.task.core.jdbc.util.Util;
 
 public class Main {
     public static void main(String[] args) {
-        // реализуйте алгоритм здесь
         UserService userService = new UserServiceImpl();
-        Util.CreateConnection();
-        //userService.saveUser("Bim", "Dim", (byte) 90);
-        //userService.removeUserById(5);
-        //userService.removeUserById(6);
-        System.out.println(userService.getAllUsers().toString());
-        Util.closeConnection();
+        userService.createUsersTable();
 
+        String name = "Bim";
+        userService.saveUser(name, "Dim", (byte) 90);
+        System.out.printf("User с именем — %s добавлен в базу данных\n", name);
+
+        name = "John";
+        userService.saveUser(name, "Doe", (byte) 35);
+        System.out.printf("User с именем — %s добавлен в базу данных\n", name);
+
+        name = "Иван";
+        userService.saveUser(name, "Иванов", (byte) 49);
+        System.out.printf("User с именем — %s добавлен в базу данных\n", name);
+
+        name = "Валерий";
+        userService.saveUser(name, "Дмитров", (byte) 66);
+        System.out.printf("User с именем — %s добавлен в базу данных\n", name);
+
+        System.out.println(userService.getAllUsers().toString());
+        userService.cleanUsersTable();
+        Util.closeConnection();
     }
 }
