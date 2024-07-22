@@ -14,7 +14,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = Util.getConnection().createStatement()){
             statement.execute(sql);
         } catch (SQLException e) {
-            System.err.println("Ошибка создания таблицы: " + e.getSQLState());
+            System.err.println("Ошибка создания таблицы: " + e.getMessage());
         }
     }
 
